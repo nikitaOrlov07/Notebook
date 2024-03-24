@@ -39,12 +39,15 @@ public class AddUser {
         JLabel nameLabel = new JLabel("Enter new Name: ");
         JLabel surnameLabel = new JLabel("Enter new Surname: ");
         JLabel emailLabel = new JLabel("Enter new Email: ");
+        JLabel messageLabel = new JLabel();
 
         loginLabel.setBounds(50,100,200,25);
         passwordLabel.setBounds(50,150,200,25);
         nameLabel.setBounds(50,200,200,25);
         surnameLabel.setBounds(50,250,200,25);
         emailLabel.setBounds(50,300,200,25);
+        messageLabel.setBounds(20,50,200,25);
+        messageLabel.setForeground(Color.RED);
 
         frame.add(loginTextfield);
         frame.add(passwordTextField);
@@ -58,6 +61,7 @@ public class AddUser {
         frame.add(nameLabel);
         frame.add(surnameLabel);
         frame.add(emailLabel);
+        frame.add(messageLabel);
         frame.getContentPane().setBackground(Color.GRAY);
 
         frame.setBounds(bounds);
@@ -74,17 +78,22 @@ public class AddUser {
                     password = passwordTextField.getText();
                     surname=surnameTextField.getText();
                     email=emailTextField.getText();
+                    if(!name.isEmpty() && !login.isEmpty() && !password.isEmpty() && !surname.isEmpty() && !email.isEmpty()) {
+                        sql = "INSERT INTO users (login, password,name,surname, email) VALUES (?, ?, ?, ?, ?)";
+                        stmt = connection.prepareStatement(sql);
 
-                    sql = "INSERT INTO users (login, password,name,surname, email) VALUES (?, ?, ?, ?, ?)";
-                    stmt = connection.prepareStatement(sql);
-
-                    stmt.setString(1, login);
-                    stmt.setString(2, password);
-                    stmt.setString(3, name);
-                    stmt.setString(4, surname);
-                    stmt.setString(5, email);
-                    stmt.executeUpdate();
-                    frame.dispose();
+                        stmt.setString(1, login);
+                        stmt.setString(2, password);
+                        stmt.setString(3, name);
+                        stmt.setString(4, surname);
+                        stmt.setString(5, email);
+                        stmt.executeUpdate();
+                        frame.dispose();
+                    }
+                    else
+                    {
+                        messageLabel.setText("You must enter all information");
+                    }
                 }
                 catch (SQLException es){es.printStackTrace();}
             }

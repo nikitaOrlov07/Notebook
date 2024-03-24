@@ -11,7 +11,7 @@ import java.util.TimerTask;
 
 public class LoginPage extends JPanel implements  ActionListener {
 
-    JFrame frame = new JFrame("Nootebook");
+    JFrame frame = new JFrame("Notebook");
     JButton loginButton = new JButton("Login");
     JButton resetButton = new JButton("Reset");
     JButton registrationButton = new JButton("Registration");
